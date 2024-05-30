@@ -139,6 +139,15 @@ namespace VirtualPetSimulator
                 hunger =  hunger + 1;
                 happiness =  happiness - 1;
 
+                if(happiness < 0)
+                {
+                    happiness = 0;
+                }
+                if(hunger > 10)
+                {
+                    hunger = 10;
+                }
+
                 // Check for neglect
                 if (hunger >= 10 || happiness <= 0 || health <= 0)
                 {
