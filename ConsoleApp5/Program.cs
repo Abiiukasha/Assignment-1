@@ -86,30 +86,45 @@ namespace VirtualPetSimulator
                         Console.WriteLine($"{petName} has been fed. Hunger: {hunger}, Health: {health}");
                         break;
                     case 2:
-                        happiness = happiness + 1;
-                        if(happiness > 10)
+                        if(hunger > 8)
                         {
-                            happiness = 10;
+                            Console.WriteLine($"{petName} refused to play due to hunger");
                         }
-                        hunger = hunger + 1;
-                        if(hunger > 10)
+                        else
                         {
-                            hunger = 10;
+                            happiness = happiness + 1;
+                            if (happiness > 10)
+                            {
+                                happiness = 10;
+                            }
+                            hunger = hunger + 1;
+                            if (hunger > 10)
+                            {
+                                hunger = 10;
+                            }
+                            Console.WriteLine($"{petName} played. Happiness: {happiness}, Hunger: {hunger}");
                         }
-                        Console.WriteLine($"{petName} played. Happiness: {happiness}, Hunger: {hunger}");
+                        
                         break;
                     case 3:
-                        health = health + 1;
-                        if(health > 10)
+                        if(happiness < 2)
                         {
-                            health = 10;
+                            Console.WriteLine($"{petName} is not resting due to illness");
                         }
-                        happiness = happiness - 1;
-                        if(happiness < 0)
+                        else
                         {
-                            happiness = 0;
+                            health = health + 1;
+                            if (health > 10)
+                            {
+                                health = 10;
+                            }
+                            happiness = happiness - 1;
+                            if (happiness < 0)
+                            {
+                                happiness = 0;
+                            }
+                            Console.WriteLine($"{petName} is resting. Health: {health}, Happiness: {happiness}");
                         }
-                        Console.WriteLine($"{petName} is resting. Health: {health}, Happiness: {happiness}");
                         break;
                     case 4:
                         Console.WriteLine($"Status of {petName} \n Hunger: {hunger} \n Happiness: {happiness} \n Health: {health}");
@@ -121,6 +136,30 @@ namespace VirtualPetSimulator
                         Console.WriteLine("Invalid choice. Please select again.");
                         break;
                 }
+                hunger =  hunger + 1;
+                happiness =  happiness - 1;
+
+                // Check for neglect
+                if (hunger >= 10 || happiness <= 0 || health <= 0)
+                {
+                    Console.WriteLine($"Warning! {petName} is not doing well.");
+                    if (hunger >= 10)
+                    {
+                        health = health - 1 ;
+                        Console.WriteLine($"{petName} is starving! Health: {health}");
+                    }
+                    if (happiness <= 0)
+                    {
+                        health = health - 1;
+                        Console.WriteLine($"{petName} is extremely unhappy! Health: {health}");
+                    }
+                }
+
+                // Check for special messages
+                if (hunger >= 8) Console.WriteLine($"{petName} is very hungry and may refuse to play!");
+                if (happiness <= 2) Console.WriteLine($"{petName} is very unhappy and may refuse to rest!");
+
+
             }
         }
 
